@@ -62,7 +62,7 @@ export const putTodo =  async (req,res)=>{
             completed
         }
 
-        const updatedTodo  = await Todo.findByIdAndUpdate(id,todo)
+        const updatedTodo  = await Todo.findByIdAndUpdate(id,todo,{new:true})
         return res.status(200).json({"todo":updatedTodo})
         
     } catch (error) {

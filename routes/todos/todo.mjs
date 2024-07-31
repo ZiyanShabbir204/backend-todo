@@ -3,11 +3,9 @@ import { deleteTodo, getAllTodo, getTodo, postTodo, putTodo } from "../../contro
 const router = Router();
 
 
-router.get("/",getAllTodo)
+router.route('/').get(getAllTodo).post(postTodo)
 
 router.get("/:id",getTodo)
-
-router.post("/",postTodo);
 
 router.put("/:id",putTodo)
 
