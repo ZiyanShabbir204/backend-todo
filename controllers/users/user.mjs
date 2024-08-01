@@ -9,8 +9,9 @@ export const postUser  =  async(req,res)=>{
         email,
         username,
       });
+      console.log("newUser",newUser)
       await newUser.save();
-      return res.status(200).json({ "newUser": newUser });
+      return res.status(200).json({ "user": newUser });
     } catch (error) {
       return res.status(400).json({ "error": error });
     }
@@ -40,6 +41,7 @@ export const getUser = async(req,res) =>{
 
 export const getAllUser  = async(req,res)=>{
     try {
+        
         const users  = await User.find()
         return res.status(200).json({"users":users})
     } catch (error) {
@@ -80,4 +82,16 @@ export const deleteUser =  async(req,res)=>{
         return res.status(400).json({ "error": error });
     }
 
+}
+
+export const deleteAllUser = async(req,res)=>{
+    try {
+        const deleteAll = await User.deleteMany({})
+        console.log("deleteAll",deleteAll)
+        return res.status(200).json({"user":deleteAll})
+        
+    } catch (error) {
+        return res.status(400).json({ "error": error });
+        
+    }
 }

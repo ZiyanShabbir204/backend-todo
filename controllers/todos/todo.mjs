@@ -82,3 +82,14 @@ export const deleteTodo =  async(req,res)=>{
     }
 
 }
+export const deleteAllTodo = async(req,res)=>{
+    try {
+        const deleteAll = await Todo.deleteMany({})
+        console.log("deleteAll",deleteAll)
+        return res.status(200).json({"todo":deleteAll})
+        
+    } catch (error) {
+        return res.status(400).json({ "error": error });
+        
+    }
+}

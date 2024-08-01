@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { deleteTodo, getAllTodo, getTodo, postTodo, putTodo } from "../../controllers/todos/todo.mjs";
+import { deleteTodo, getAllTodo, getTodo, postTodo, putTodo,deleteAllTodo } from "../../controllers/todos/todo.mjs";
 const router = Router();
 
 
@@ -10,4 +10,6 @@ router.get("/:id",getTodo)
 router.put("/:id",putTodo)
 
 router.delete("/:id",deleteTodo)
+router.delete("/",deleteAllTodo)
+
 export default router;
