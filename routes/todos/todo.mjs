@@ -4,13 +4,14 @@ const router = Router();
 import protectRoute from "../../middleware/protect.routes.js";
 
 
-router.route('/').get(getAllTodo).post(postTodo)
+// router.route('/').get(getAllTodo).post(postTodo)
+router.get("/",protectRoute,getAllTodo)
+router.post("/",protectRoute,postTodo)
+router.get("/:id",protectRoute,getTodo)
 
-router.get("/:id",getTodo)
+router.put("/:id",protectRoute,putTodo)
 
-router.put("/:id",putTodo)
-
-router.delete("/:id",deleteTodo)
-router.delete("/",deleteAllTodo)
+router.delete("/:id",protectRoute, deleteTodo)
+router.delete("/",protectRoute,deleteAllTodo)
 
 export default router;

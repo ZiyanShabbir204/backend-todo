@@ -3,13 +3,14 @@ import jwt from "jsonwebtoken"
 
 const protectRoute = async (req,res,next) =>{
     try {
-        console.log("cookies",req.cookies)
-        const token = req.cookies.jwt;
+       
+        const token = req.headers['authorization']
+        // console.log("token",token)
         if(!token){
             return res.status(401).json({error:"Unauthorized no token acces"})
         }
 
-        const decoded = jwt.verify(token, "SECRET-KEY")
+        const decoded = jwt.verify(token.split(" ")[1], "SECRET-KEY")
         if (!decoded){
             return res.status(401).json({error:"Unauthorized no token acces"})
         }

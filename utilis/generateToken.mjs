@@ -7,12 +7,13 @@ const generateWebTokenAndSetCookies = (userId, res) => {
 //   console.log("jwt token", token);
 //   return token
 
-  res.cookie("jwt", token, {
-    maxAge: 15 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
-    sameSite: "strict",
-    secure: "development" !== "development",
-  });
+  // res.cookie("jwt", token, {
+  //   maxAge: 15 * 24 * 60 * 60 * 1000,
+  //   httpOnly: true,
+  //   sameSite: "strict",
+  //   secure: "development" !== "development",
+  // });
+  return token
 };
 
 export default generateWebTokenAndSetCookies;
