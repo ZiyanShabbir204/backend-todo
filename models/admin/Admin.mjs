@@ -7,7 +7,10 @@ const adminSchema = mongoose.Schema({
         required: true,
         unique : true
     },
-    password : String
+    password :{
+        type :String,
+        select : false
+    }
 
 })
 
