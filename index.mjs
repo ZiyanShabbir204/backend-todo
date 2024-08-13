@@ -19,6 +19,6 @@ app.get("/", (req, res) => {
   console.log("hello World");
 });
 
-app.use("/api/user", UserRoutes);
-app.use("/api/todo", TodoRoutes);
+app.use("/api/users", UserRoutes);
+app.use("/api/todos", TodoRoutes);
 app.use("/api/admin",AdminRoutes)
