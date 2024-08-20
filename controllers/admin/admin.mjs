@@ -1,5 +1,6 @@
 import Admin from "../../models/admin/Admin.mjs";
 import bcrypt from "bcrypt";
+import nodemailer from "nodemailer"
 import generateWebTokenAndSetCookies from "../../utilis/generateToken.mjs";
 import { responseHelper } from "../../utilis/responseHelper.mjs";
 import { statusHelper } from "../../utilis/statusHelper.mjs";
@@ -86,14 +87,19 @@ export const login = async (req, res) => {
         .json(responseHelper(false, "Incorrect Credientials", null));
     }
     const token = generateWebTokenAndSetCookies(admin._id, res);
+    const adminData = {
+      _id: admin._id,
+      fullname: admin.fullname,
+      email: admin.email,
+      isVerified: admin.isVerified
+    }
+
+    console.log("admin data",adminData)
+    console.log("admin",admin)
 
     return res.status(statusHelper(1)).json(
       responseHelper(true, "login succesfull", {
-        admin: {
-          _id: admin._id,
-          fullname: admin.fullname,
-          email: admin.email,
-        },
+        admin: adminData ,
         token: token,
       })
     );
@@ -144,6 +150,72 @@ export const changePassword = async (req, res) => {
 };
 
 
+// export const sendEmail = async (req,res)=>{
+//   try {
+//     const transporter = nodemailer.createTransport({
+//       host: "smtp.ethereal.email",
+//       port: 587,
+//       auth: {
+//         user: "lucas.boehm80@ethereal.email",
+//         pass: "FDwAr1PXZMmju2jPrs",
+//       },
+//     });
+//     const info = await transporter.sendMail({
+//       from: '"lucas" <lucas.boehm80@ethereal.email>', // sender address
+//       to: "ziyanshabbir25@gmail.com", // list of receivers
+//       subject: "test node mailer", // Subject line
+//       text: "Hello world?", // plain text body
+//       html: "<b>Hello world?</b>", // html body
+//     });
+
+//     return res.status(statusHelper(1)).json(responseHelper(true,"email deliver",info))
+
+    
+//   } catch (error) {
+//     return res
+//     .status(statusHelper(2))
+//     .json(responseHelper(false, "internal server error", null));
+
+//   }
+
+
+// }
+
+export const sendEmail = async (req,res)=>{
+
+  const {body} = req
+  const {email:recieverEmail} = body
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      auth: {
+        user: "ziyanshabbir25@gmail.com",
+        pass: "ttazqajftqetnjjd",
+      },
+    });
+    const info = await transporter.sendMail({
+      from: '<ziyanshabbir25@gmail.com>', // sender address
+      to: recieverEmail, // list of receivers
+      subject: "Signed User", // Subject line
+      text: "verify your email", // plain text body
+     
+    });
+
+    return res.status(statusHelper(1)).json(responseHelper(true,"email deliver",info))
+
+    
+  } catch (error) {
+    console.log("error while sending an email",error)
+    return res
+    .status(statusHelper(2))
+    .json(responseHelper(false, "internal server error", null));
+
+  }
+
+
+}
 export const updateProfile = async (req,res)=>{
   const { id } = req.params;
   const { body } = req;

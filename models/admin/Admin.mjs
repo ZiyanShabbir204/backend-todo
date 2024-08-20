@@ -10,6 +10,10 @@ const adminSchema = mongoose.Schema({
     password :{
         type :String,
         select : false
+    },
+    isVerified : {
+        type: Boolean,
+        default : false
     }
 
 })
